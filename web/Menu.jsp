@@ -10,47 +10,78 @@
 <style>
     /* ===== MENU TRÊN ===== */
     .navbar {
-        padding: 8px 0;
+        background: linear-gradient(90deg, #0d6efd, #00c6ff);
+        padding: 10px 0;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        align-items: center;
     }
 
     .navbar .nav-link {
-        font-size: 14px;
-        color: #ddd !important;
+        color: #fff !important;
+        font-size: 15px;
+        margin: 0 8px;
         transition: 0.3s;
+        white-space: nowrap;
     }
 
     .navbar .nav-link:hover {
-        color: #ff6600 !important;
+        color: #ffd43b !important;
+    }
+
+    /* Logo */
+    .navbar-brand img {
+        width: 70px;
+        border-radius: 10px;
+    }
+
+    /* Search */
+    .input-group input {
+        border-radius: 20px 0 0 20px;
+    }
+
+    .input-group button {
+        border-radius: 0 20px 20px 0;
+    }
+
+    /* Giỏ hàng */
+    .btn-success {
+        border-radius: 20px;
+        padding: 6px 15px;
+        font-weight: 600;
+        background: #28a745;
+        border: none;
+    }
+
+    .btn-success:hover {
+        background: #218838;
     }
 
     /* ===== MENU DƯỚI ===== */
     .top-menu {
-        background: #007bff;
-        padding: 5px 0; /* nhỏ lại */
+        background: #fff;
+        padding: 8px 0;
+        border-radius: 15px;
+        margin: 20px auto;
+        width: 95%;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
     }
 
-    /* Link menu dưới */
     .top-menu .nav-link {
-        color: #fff !important;
-        font-size: 13px; /* nhỏ hơn */
-        font-weight: 500;
-        padding: 6px 12px; /* gọn hơn */
-        margin: 0 3px;
-        border-radius: 20px; /* bo tròn đẹp */
-        transition: all 0.3s ease;
+        color: #007bff !important;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 25px;
+        transition: 0.3s;
     }
 
-    /* Hover */
     .top-menu .nav-link:hover {
-        background: #fff;
-        color: #ff6600 !important;
+        background: #007bff;
+        color: #fff !important;
     }
 
-    /* Active */
     .top-menu .nav-link.active {
-        background: #fff;
-        color: #ff6600 !important;
-        font-weight: bold;
+        background: linear-gradient(45deg, #007bff, #00c6ff);
+        color: #fff !important;
     }
 
     /* Icon spacing */
@@ -98,9 +129,6 @@
                     if (acc != null) {
                 %>
                 <li class="nav-item">
-                    <p class="nav-link">Xin Chào <%=acc.getUseraccount()%></p>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="logout">Đăng xuất</a>
                 </li>
                 <%
@@ -114,26 +142,35 @@
                 %>
             </ul>
 
-            <form action="search" method="post" class="form-inline my-2 my-lg-0">
-                <div class="input-group input-group-sm">
-                    <input name="txt" type="text" value="${txtS}" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="Search...">
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-secondary btn-number">
-                            <i class="fa fa-search"></i>
-                        </button>
+            <div class="d-flex align-items-center">
+
+                <form action="search" method="post" class="form-inline mr-3">
+                    <div class="input-group input-group-sm">
+                        <input name="txt" type="text" value="${txtS}" 
+                               class="form-control" placeholder="Search...">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-light">
+                                🔍
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <a class="btn btn-success btn-sm ml-3" href="show">
-                    <i class="fa fa-shopping-cart"></i> Giỏ hàng
-                    <span class="badge badge-light">3</span>
+                </form>
+
+                <a class="btn btn-success btn-sm mr-3" href="show">
+                    🛒 Giỏ hàng <span class="badge badge-light">3</span>
                 </a>
-            </form>
+
+            </div>
             <%
                 if (acc != null) {
             %>
-            <li class="nav-item">
-                <a class="nav-link" href="#"><%= acc.getUseraccount()%></a>
-            </li>
+            <%
+                if (acc != null) {
+            %>
+            <a class="nav-link text-white ml-3"><%= acc.getUseraccount()%></a>
+            <%
+                }
+            %>
             <%
                 }
             %>

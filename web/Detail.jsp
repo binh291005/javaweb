@@ -38,14 +38,15 @@
             }
 
             .product-image img {
-                width: 100%;
+                width: 80%;
                 max-height: 420px;
                 object-fit: contain;
                 transition: 0.3s;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             }
 
             .product-image img:hover {
-                transform: scale(1.05);
+                transform: scale(1.08);
             }
 
             /* Tiêu đề */
@@ -137,7 +138,28 @@
                 background: #007bff;
                 color: #fff;
             }
+            /* Title */
+            .desc-title {
+                font-weight: 700;
+                color: #003366;
+                margin-bottom: 15px;
+            }
 
+            /* Box mô tả */
+            .product-desc-box {
+                background: #f9fbff;
+                border-left: 4px solid #007bff;
+                padding: 15px 20px;
+                border-radius: 8px;
+            }
+
+            /* Nội dung */
+            .product-desc-box p {
+                margin: 0;
+                color: #444;
+                line-height: 1.7;
+                text-align: justify;
+            }
         </style>
     </head>
     <body>
@@ -171,10 +193,11 @@
 
                                 <hr>
 
-                                <h5>Mô tả sản phẩm</h5>
-                                <p class="product-desc">
-                                    <%=detail.getDescription()%>
-                                </p>
+                                <h5 class="desc-title">Mô tả sản phẩm</h5>
+
+                                <div class="product-desc-box">
+                                    <p><%=detail.getDescription()%></p>
+                                </div>
 
                                 <hr>
 

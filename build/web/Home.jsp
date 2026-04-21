@@ -21,19 +21,6 @@
     </head>
     <body>
         <jsp:include page="Menu.jsp"></jsp:include>
-<!--            <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="Home">Home</a></li>
-                                <li class="breadcrumb-item"><a href="#">Category</a></li>
-                                <li class="breadcrumb-item active" aria-current="#">Sub-category</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-            </div>-->
             <div class="container">
                 <div class="row">
                 <jsp:include page="Left.jsp"></jsp:include>
@@ -42,7 +29,7 @@
                         <div class="row">
                         <%
                             List<Products> listP = (List<Products>) request.getAttribute("listP");
-                            if (listP != null) {
+                            if (listP != null && !listP.isEmpty()) {
                                 for (Products o : listP) {
                         %>
                         <div class="col-12 col-md-6 col-lg-4">

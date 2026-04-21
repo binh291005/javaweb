@@ -32,7 +32,7 @@ public class ProductsDAO {
                         rs.getString(4),
                         rs.getString(5),
                         rs.getInt(6),
-                        rs.getInt(7)));
+                        rs.getInt(8)));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,7 +71,7 @@ public class ProductsDAO {
                         rs.getString(4),
                         rs.getString(5),
                         rs.getInt(6),
-                        rs.getInt(7)
+                        rs.getInt(8)
                 );
             }
         } catch (Exception e) {
@@ -95,7 +95,7 @@ public class ProductsDAO {
                         rs.getString(4),
                         rs.getString(5),
                         rs.getInt(6),
-                        rs.getInt(7)));
+                        rs.getInt(8)));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -117,7 +117,7 @@ public class ProductsDAO {
                         rs.getString(4),
                         rs.getString(5),
                         rs.getInt(6),
-                        rs.getInt(7)));
+                        rs.getInt(8)));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -140,7 +140,7 @@ public class ProductsDAO {
                         rs.getString(4),
                         rs.getString(5),
                         rs.getInt(6),
-                        rs.getInt(7)));
+                        rs.getInt(8)));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -233,7 +233,7 @@ public class ProductsDAO {
                         rs.getString(4),
                         rs.getString(5),
                         rs.getInt(6),
-                        rs.getInt(7)));
+                        rs.getInt(8)));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -302,7 +302,7 @@ public class ProductsDAO {
                         rs.getString(4),
                         rs.getString(5),
                         rs.getInt(6),
-                        rs.getInt(7)
+                        rs.getInt(8)
                 ));
             }
         } catch (Exception e) {
@@ -327,7 +327,7 @@ public class ProductsDAO {
                         rs.getString(4),
                         rs.getString(5),
                         rs.getInt(6),
-                        rs.getInt(7)
+                        rs.getInt(8)
                 ));
             }
         } catch (Exception e) {

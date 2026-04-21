@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : Left
     Created on : 10 thg 4, 2026, 11:12:56
     Author     : THANH BINH
@@ -25,20 +25,24 @@
         </ul>
     </div>
 
+    <%
+        Products p = (Products) request.getAttribute("p");
+    %>
+
     <div class="card bg-light mb-3">
-        <div class="card-header bg-success text-white text-uppercase">Sản phẩm mới nhất</div>
-        <%
-            Products p = (Products) request.getAttribute("p");
-            if (p != null) {
-        %>
-        <div class="card-body">
-            <img style="width: 100%;height: 200px;border-radius: 5px;display: block;margin: 0 auto;" class="img-fluid" src="<%=p.getImage()%>" />
-            <h5 class="card-title"><%=p.getName()%></h5>
-            <p class="bloc_left_price"><%=p.getPrice()%>₫</p>
+        <div class="card-header bg-success text-white text-uppercase">
+            SẢN PHẨM MỚI NHẤT
         </div>
-        <%
-            }
-        %>
+
+        <div class="card-body text-center">
+            <% if (p != null) {%>
+            <img class="img-fluid" src="<%=p.getImage()%>" />
+            <h5><%=p.getName()%></h5>
+            <p class="text-danger"><%=p.getPrice()%>₫</p>
+            <% } else { %>
+            <p>Không có sản phẩm</p>
+            <% }%>
+        </div>
     </div>
 
 </div>

@@ -18,36 +18,147 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link href="css/style.css" rel="stylesheet" type="text/css"/>
         <style>
-            .gallery-wrap .img-big-wrap img {
-                height: 450px;
-                width: auto;
-                display: inline-block;
-                cursor: zoom-in;
+            body {
+                background: #f5f9ff;
             }
 
-
-            .gallery-wrap .img-small-wrap .item-gallery {
-                width: 60px;
-                height: 60px;
-                border: 1px solid #ddd;
-                margin: 7px 2px;
-                display: inline-block;
+            /* Card chính */
+            .product-card {
+                border-radius: 15px;
                 overflow: hidden;
+                box-shadow: 0 8px 25px rgba(0, 123, 255, 0.15);
+                background: #fff;
             }
 
-            .gallery-wrap .img-small-wrap {
+            /* Ảnh sản phẩm */
+            .product-image {
+                padding: 20px;
+                background: #f0f6ff;
                 text-align: center;
             }
-            .gallery-wrap .img-small-wrap img {
-                max-width: 100%;
-                max-height: 100%;
-                object-fit: cover;
-                border-radius: 4px;
-                cursor: zoom-in;
+
+            .product-image img {
+                width: 80%;
+                max-height: 420px;
+                object-fit: contain;
+                transition: 0.3s;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             }
-            .img-big-wrap img{
-                width: 100% !important;
-                height: auto !important;
+
+            .product-image img:hover {
+                transform: scale(1.08);
+            }
+
+            /* Tiêu đề */
+            .product-title {
+                font-size: 26px;
+                font-weight: 600;
+                color: #003366;
+            }
+
+            /* Giá */
+            .product-price {
+                font-size: 32px;
+                font-weight: bold;
+                color: #007bff;
+            }
+
+            /* Description */
+            .product-desc {
+                color: #555;
+                line-height: 1.6;
+            }
+
+            /* Select số lượng */
+            .quantity-box select {
+                border-radius: 8px;
+                border: 1px solid #007bff;
+            }
+
+            /* Button */
+            .btn-buy {
+                background: linear-gradient(45deg, #007bff, #00c6ff);
+                border: none;
+                border-radius: 8px;
+                padding: 12px 25px;
+                font-weight: bold;
+                color: #fff !important;
+            }
+
+            .btn-buy:hover {
+                opacity: 0.9;
+            }
+
+            .btn-cart {
+                border: 2px solid #007bff;
+                color: #007bff;
+                border-radius: 8px;
+                padding: 12px 25px;
+                font-weight: bold;
+            }
+
+            .btn-cart:hover {
+                background: #007bff;
+                color: #fff;
+            }
+
+            /* Badge */
+            .badge-stock {
+                background: #28a745;
+                color: #fff;
+                padding: 5px 10px;
+                border-radius: 20px;
+                font-size: 12px;
+            }
+
+            /* Responsive spacing */
+            .product-info {
+                padding: 30px;
+            }
+
+            .btn-primary {
+                background: #007bff;
+                border: none;
+                font-weight: 600;
+                color: #fff;
+            }
+
+            .btn-primary:hover {
+                background: #0056b3;
+                color: #fff;
+            }
+
+            .btn-outline-primary {
+                border: 2px solid #007bff;
+                color: #007bff;
+                font-weight: 600;
+            }
+
+            .btn-outline-primary:hover {
+                background: #007bff;
+                color: #fff;
+            }
+            /* Title */
+            .desc-title {
+                font-weight: 700;
+                color: #003366;
+                margin-bottom: 15px;
+            }
+
+            /* Box mô tả */
+            .product-desc-box {
+                background: #f9fbff;
+                border-left: 4px solid #007bff;
+                padding: 15px 20px;
+                border-radius: 8px;
+            }
+
+            /* Nội dung */
+            .product-desc-box p {
+                margin: 0;
+                color: #444;
+                line-height: 1.7;
+                text-align: justify;
             }
         </style>
     </head>
@@ -60,70 +171,77 @@
                     Products detail = (Products) request.getAttribute("detail");
                 %>
                 <div class="col-sm-9">
-                    <div class="container">
-                        <div class="card">
-                            <div class="row">
-                                <aside class="col-sm-5 border-right">
-                                    <article class="gallery-wrap"> 
-                                        <div class="img-big-wrap">
-                                            <div> <a href="#"><img src="<%=detail.getImage()%>"></a></div>
-                                        </div> <!-- slider-product.// -->
-                                    </article> <!-- gallery-wrap .end// -->
-                                </aside>
-                                <aside class="col-sm-7">
-                                    <article class="card-body p-5">
-                                        <h3 class="title mb-3"><%=detail.getName()%></h3>
+                    <div class="product-card">
+                        <div class="row no-gutters">
 
-                                        <p class="price-detail-wrap"> 
-                                            <span class="price h3 text-warning"> 
-                                                <span class="currency"></span><span class="num"><%=detail.getPrice()%>₫</span>
-                                            </span> 
-                                            <!--<span>/per kg</span>--> 
-                                        </p> <!-- price-detail-wrap .// -->
-                                        <dl class="item-property">
-                                            <dt>Description</dt>
-                                            <dd><p><%=detail.getDescription()%> </p></dd>
-                                        </dl>
-                                        <!--                                        <dl class="param param-feature">
-                                                                                    <dt>Model#</dt>
-                                                                                    <dd>12345611</dd>
-                                                                                </dl>   item-property-hor .// 
-                                                                                <dl class="param param-feature">
-                                                                                    <dt>Color</dt>
-                                                                                    <dd>Black and white</dd>
-                                                                                </dl>   item-property-hor .// 
-                                                                                <dl class="param param-feature">
-                                                                                    <dt>Delivery</dt>
-                                                                                    <dd>Russia, USA, and Europe</dd>
-                                                                                </dl>   item-property-hor .// -->
+                            <!-- ẢNH -->
+                            <div class="col-md-5 product-image">
+                                <img src="<%=detail.getImage()%>" alt="product">
+                            </div>
 
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-5">
-                                                <dl class="param param-inline">
-                                                    <dt>Quantity: </dt>
-                                                    <dd>
-                                                        <select class="form-control form-control-sm" style="width:70px;">
-                                                            <option> 1 </option>
-                                                            <option> 2 </option>
-                                                            <option> 3 </option>
-                                                        </select>
-                                                    </dd>
-                                                </dl>  <!-- item-property .// -->
-                                            </div> <!-- col.// -->
+                            <!-- THÔNG TIN -->
+                            <div class="col-md-7 product-info">
+                                <h2 class="product-title"><%=detail.getName()%></h2>
 
-                                        </div> <!-- row.// -->
-                                        <hr>
-                                        <a href="#" class="btn btn-lg btn-primary text-uppercase"> Buy now </a>
-                                        <a href="#" class="btn btn-lg btn-outline-primary text-uppercase"> <i class="fas fa-shopping-cart"></i> Add to cart </a>
-                                    </article> <!-- card-body.// -->
-                                </aside> <!-- col.// -->
-                            </div> <!-- row.// -->
-                        </div> <!-- card.// -->
+                                <% if (detail.getQuantity() > 0) {%>
+                                <span class="badge-stock">Còn hàng (<%=detail.getQuantity()%>)</span>
+                                <% } else { %>
+                                <span class="badge badge-danger">Hết hàng</span>
+                                <% }%>
 
+                                <p class="product-price mt-3"><%=detail.getPrice()%>₫</p>
 
+                                <hr>
+
+                                <h5 class="desc-title">Mô tả sản phẩm</h5>
+
+                                <div class="product-desc-box">
+                                    <p><%=detail.getDescription()%></p>
+                                </div>
+
+                                <hr>
+
+                                <!-- Quantity -->
+                                <div class="d-flex align-items-center">
+                                    <button class="btn btn-outline-secondary" onclick="decrease()">-</button>
+                                    <input id="qty" type="number" value="1" min="1" max="<%=detail.getQuantity()%>"
+                                           class="form-control text-center mx-2" style="width:60px;">
+                                    <button class="btn btn-outline-secondary" onclick="increase()">+</button>
+                                </div>
+
+                                <script>
+                                    function increase() {
+                                        let qty = document.getElementById("qty");
+                                        let max = <%=detail.getQuantity()%>;
+                                        if (parseInt(qty.value) < max) {
+                                            qty.value = parseInt(qty.value) + 1;
+                                        }
+                                    }
+
+                                    function decrease() {
+                                        let qty = document.getElementById("qty");
+                                        if (qty.value > 1) {
+                                            qty.value--;
+                                        }
+                                    }
+                                </script>
+
+                                <!-- BUTTON -->
+                                <div class="mt-4">
+                                    <% if (detail.getQuantity() > 0) { %>
+                                    <button class="btn btn-buy mr-2">MUA NGAY</button>
+                                    <button class="btn btn-cart">THÊM VÀO GIỎ</button>
+                                    <% } else { %>
+                                    <button class="btn btn-secondary mr-2" disabled>HẾT HÀNG</button>
+                                    <% }%>
+                                </div>
+
+                            </div>
+
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
