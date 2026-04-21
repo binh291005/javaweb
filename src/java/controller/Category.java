@@ -44,6 +44,7 @@ public class Category extends HttpServlet {
         }
 
         request.setAttribute("cid", cid);
+        request.setAttribute("type", null);
 
         request.setAttribute("listP", list);
         request.setAttribute("listC", listC);

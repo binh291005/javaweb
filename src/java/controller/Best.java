@@ -5,7 +5,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,10 +35,13 @@ public class Best extends HttpServlet {
 
         List<Products> list = dao.getBestProducts();
         List<model.Category> listC = dao.getAllCategory();
-
+        Products last = dao.getLast();
+        
+        request.setAttribute("p", last);
         request.setAttribute("listP", list);
         request.setAttribute("listC", listC);
-        request.setAttribute("bestSelling", list);
+        request.setAttribute("type", "best");
+        request.setAttribute("title", "SẢN PHẨM BÁN CHẠY");
 
         request.getRequestDispatcher("Home.jsp").forward(request, response);
     }

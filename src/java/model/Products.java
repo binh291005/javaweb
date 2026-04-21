@@ -15,18 +15,21 @@ public class Products {
     private String price;
     private String description;
     private int cid;
+    private int quantity;
 
     public Products() {
     }
 
-    public Products(int id, String name, String image, String price, String description, int cid) {
+    public Products(int id, String name, String image, String price, String description, int cid, int quantity) {
         this.id = id;
         this.name = name;
         this.image = image;
         this.price = price;
         this.description = description;
         this.cid = cid;
+        this.quantity = quantity;
     }
+
 
     public int getCid() {
         return cid;
@@ -78,9 +81,17 @@ public class Products {
         this.description = description;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     @Override
     public String toString() {
-        return "Products{" + "id=" + id + ", name=" + name + ", image=" + image + ", price=" + price + ", description=" + description + '}';
+        return "Products{" + "id=" + id + ", name=" + name + ", image=" + image + ", price=" + price + ", description=" + description + ", cid=" + cid + ", quantity=" + quantity + '}';
     }
-    
+
 }

@@ -42,6 +42,7 @@ public class Home extends HttpServlet {
         request.setAttribute("listP", list);
         request.setAttribute("listC", listC);
         request.setAttribute("p", last);
+        request.setAttribute("title", "TẤT CẢ SẢN PHẨM");
         request.getRequestDispatcher("Home.jsp").forward(request, response);
     }
 

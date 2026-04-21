@@ -31,7 +31,8 @@ public class ProductsDAO {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getInt(6)));
+                        rs.getInt(6),
+                        rs.getInt(7)));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -69,7 +70,8 @@ public class ProductsDAO {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getInt(6)
+                        rs.getInt(6),
+                        rs.getInt(7)
                 );
             }
         } catch (Exception e) {
@@ -92,7 +94,8 @@ public class ProductsDAO {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getInt(6)));
+                        rs.getInt(6),
+                        rs.getInt(7)));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -101,7 +104,6 @@ public class ProductsDAO {
     }
 
     public Products getProductByID(String id) {
-        List<Products> list = new ArrayList<>();
         String sql = "select * from product where id = ?";
         try {
             conn = new dbConnect().getConnection(); // mở kết nối với sql
@@ -114,7 +116,8 @@ public class ProductsDAO {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getInt(6)));
+                        rs.getInt(6),
+                        rs.getInt(7)));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -136,7 +139,8 @@ public class ProductsDAO {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getInt(6)));
+                        rs.getInt(6),
+                        rs.getInt(7)));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -228,7 +232,8 @@ public class ProductsDAO {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getInt(6)));
+                        rs.getInt(6),
+                        rs.getInt(7)));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -286,6 +291,7 @@ public class ProductsDAO {
         List<Products> list = new ArrayList<>();
         String sql = "SELECT * FROM product ORDER BY id DESC LIMIT 8";
         try {
+            conn = new dbConnect().getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -295,10 +301,12 @@ public class ProductsDAO {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getInt(6)
+                        rs.getInt(6),
+                        rs.getInt(7)
                 ));
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return list;
     }
@@ -308,6 +316,7 @@ public class ProductsDAO {
         String sql = "SELECT * FROM product ORDER BY id ASC LIMIT 8"; // tạm thời
 
         try {
+            conn = new dbConnect().getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -317,10 +326,12 @@ public class ProductsDAO {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getInt(6)
+                        rs.getInt(6),
+                        rs.getInt(7)
                 ));
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return list;
     }

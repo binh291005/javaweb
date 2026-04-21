@@ -35,10 +35,13 @@ public class New extends HttpServlet {
 
         List<Products> list = dao.getNewProducts();
         List<model.Category> listC = dao.getAllCategory();
-
+        Products last = dao.getLast();
+        
+        request.setAttribute("p", last);
         request.setAttribute("listP", list);
         request.setAttribute("listC", listC);
-        request.setAttribute("latestProducts", list);
+        request.setAttribute("type", "new");
+        request.setAttribute("title", "SẢN PHẨM MỚI NHẤT");
 
         request.getRequestDispatcher("Home.jsp").forward(request, response);
     }

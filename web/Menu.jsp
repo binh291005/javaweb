@@ -157,19 +157,24 @@
 
             <!-- Tất cả -->
             <li class="nav-item">
-                <a class="nav-link <%= (request.getAttribute("cid") == null ? "active" : "")%>" href="Home">
+                <a class="nav-link 
+                   <%= (request.getAttribute("type") == null && request.getAttribute("cid") == null ? "active" : "")%>" 
+                   href="Home">
                     TẤT CẢ
                 </a>
             </li>
 
             <!-- Category -->
             <%
+                String type = (String) request.getAttribute("type");
                 Integer currentCid = (Integer) request.getAttribute("cid");
+
                 if (listC != null) {
                     for (Category c : listC) {
             %>
             <li class="nav-item">
-                <a class="nav-link <%= (currentCid != null && currentCid == c.getCid() ? "active" : "")%>" 
+                <a class="nav-link 
+                   <%= (type == null && currentCid != null && currentCid == c.getCid()) ? "active" : ""%>" 
                    href="category?cid=<%=c.getCid()%>">
                     <%=c.getCname()%>
                 </a>
@@ -181,14 +186,14 @@
 
             <!-- New -->
             <li class="nav-item">
-                <a class="nav-link" href="new">
+                <a class="nav-link <%= "new".equals(request.getAttribute("type")) ? "active" : ""%>" href="new">
                     MỚI NHẤT
                 </a>
             </li>
 
             <!-- Best -->
             <li class="nav-item">
-                <a class="nav-link" href="best">
+                <a class="nav-link <%= "best".equals(request.getAttribute("type")) ? "active" : ""%>" href="best">
                     BÁN CHẠY
                 </a>
             </li>
