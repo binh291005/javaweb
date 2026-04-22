@@ -36,13 +36,14 @@ public class Add extends HttpServlet {
         String image = request.getParameter("image");
         String price = request.getParameter("price");
         String description = request.getParameter("description");
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
         int category = Integer.parseInt(request.getParameter("category"));
         HttpSession session = request.getSession();
         Account a = (Account) session.getAttribute("acc");
         int sid = a.getId();
         
         ProductsDAO dao = new ProductsDAO();
-        dao.addProduct(name, image, price, description, category, sid);
+        dao.addProduct(name, image, price, description, category, sid, quantity);
         response.sendRedirect("managerproduct");
         
     }

@@ -253,8 +253,8 @@ public class ProductsDAO {
         }
     }
 
-    public void addProduct(String name, String image, String price, String description, int category, int sid) {
-        String sql = "INSERT INTO product(name, image, price, description, cid, sID) VALUES (?,?,?,?,?,?)";
+    public void addProduct(String name, String image, String price, String description, int category, int sid, int quantity) {
+        String sql = "INSERT INTO product(name, image, price, description, cid, sID, quantity) VALUES (?,?,?,?,?,?,?)";
         try {
             conn = new dbConnect().getConnection(); // mở kết nối với sql
             ps = conn.prepareStatement(sql);
@@ -264,14 +264,15 @@ public class ProductsDAO {
             ps.setString(4, description);
             ps.setInt(5, category);
             ps.setInt(6, sid);
+            ps.setInt(7, quantity);
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void editProduct(String name, String image, String price, String description, int category, int pid) {
-        String sql = "UPDATE product SET name=?,image=?,price=?,description=?,cid=? WHERE id = ?";
+    public void editProduct(String name, String image, String price, String description, int category, int pid, int quantity) {
+        String sql = "UPDATE product SET name=?,image=?,price=?,description=?,cid=?,quantity=? WHERE id = ?";
         try {
             conn = new dbConnect().getConnection(); // mở kết nối với sql
             ps = conn.prepareStatement(sql);
@@ -281,6 +282,7 @@ public class ProductsDAO {
             ps.setString(4, description);
             ps.setInt(5, category);
             ps.setInt(6, pid);
+            ps.setInt(7, quantity);
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

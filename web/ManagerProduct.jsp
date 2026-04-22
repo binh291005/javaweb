@@ -134,6 +134,10 @@
                                 <textarea name="description" class="form-control" required></textarea>
                             </div>
                             <div class="form-group">
+                                <label>Số lượng</label>
+                                <input name="quantity" type="number" class="form-control" required min="0">
+                            </div>
+                            <div class="form-group">
                                 <label>Danh mục</label>
                                 <select name="category" class="form-control" style="height: 40px;">
                                     <%
@@ -194,6 +198,12 @@
                                 <label>Mô tả</label>
                                 <textarea name="description" class="form-control" required><%= (detail != null ? detail.getDescription() : "")%></textarea>
                             </div>	
+                            <div class="form-group">
+                                <label>Số lượng</label>
+                                <input name="quantity" 
+                                       value="<%= (detail != null ? detail.getQuantity() : "")%>" 
+                                       type="number" class="form-control" required min="0">
+                            </div>
                             <div class="form-group">
                                 <label>Danh mục</label>
                                 <select name="category" class="form-control" style="height: 40px;">

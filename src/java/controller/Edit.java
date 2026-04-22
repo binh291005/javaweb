@@ -75,9 +75,10 @@ public class Edit extends HttpServlet {
         String image = request.getParameter("image");
         String price = request.getParameter("price");
         String description = request.getParameter("description");
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
         int category = Integer.parseInt(request.getParameter("category"));
 
-        dao.editProduct(name, image, price, description, category, pid);
+        dao.editProduct(name, image, price, description, category, pid, quantity);
 
         response.sendRedirect("managerproduct"); // reload lại danh sách
     }
