@@ -8,56 +8,117 @@
 <%@page import="model.Products"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
         <title>Quản lý sản phẩm</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <link href="css/manager.css" rel="stylesheet" type="text/css"/>
+
+        <!-- Bootstrap 5 -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Icon -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
         <style>
-            img{
-                width: 200px;
-                height: 120px;
+            body {
+                background: #f4f8ff;
+                font-family: 'Segoe UI', sans-serif;
+            }
+
+            .table-wrapper {
+                background: #fff;
+                padding: 25px;
+                margin-top: 30px;
+                border-radius: 15px;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            }
+
+            .table-title {
+                background: linear-gradient(45deg, #0d6efd, #00c6ff);
+                color: #fff;
+                padding: 15px 25px;
+                border-radius: 10px;
+                margin-bottom: 20px;
+            }
+
+            .table th {
+                background: #f0f6ff;
+            }
+
+            .table td img {
+                width: 120px;
+                height: 80px;
+                object-fit: cover;
+                border-radius: 8px;
+            }
+
+            .btn {
+                border-radius: 20px;
+            }
+
+            .edit {
+                color: orange;
+            }
+
+            .delete {
+                color: red;
             }
         </style>
     </head>
+
     <body>
         <div class="container">
             <div class="table-wrapper">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h2>Quản lý <b>sản phẩm</b></h2>
-                        </div>
-                        <div class="col-sm-6">
-                            <a href="#addEmployeeModal"  class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Thêm sản phẩm</span></a>
-                            <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Xóa</span></a>						
-                        </div>
+
+                <!-- TITLE -->
+                <div class="table-title d-flex justify-content-between align-items-center">
+                    <h4>Quản lý sản phẩm</h4>
+                    <div>
+                        <button class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#addModal">
+                            ➕ Thêm
+                        </button>
                     </div>
                 </div>
-                <table class="table table-striped table-hover">
+
+                <!-- TABLE -->
+                <%
+                    String msg = request.getParameter("msg");
+                    if (msg != null) {
+                %>
+
+                <div class="alert 
+                     <%= msg.contains("success") ? "alert-success" : "alert-danger"%> 
+                     alert-dismissible fade show" role="alert">
+
+                    <%
+                        if ("add_success".equals(msg)) {
+                    %> ✅ Thêm sản phẩm thành công!
+                    <% } else if ("edit_success".equals(msg)) { %>
+                    ✏️ Cập nhật sản phẩm thành công!
+                    <% } else if ("delete_success".equals(msg)) { %>
+                    ❌ Xóa sản phẩm thành công!
+                    <% } else { %>
+                    ⚠️ Có lỗi xảy ra!
+                    <% } %>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+
+                <% } %>
+                <table class="table table-bordered table-hover text-center align-middle">
                     <thead>
                         <tr>
-                            <th>
-                                <span class="custom-checkbox">
-                                    <input type="checkbox" id="selectAll">
-                                    <label for="selectAll"></label>
-                                </span>
-                            </th>
                             <th>ID</th>
-                            <th>Tên sản phẩm</th>
-                            <th>Hình ảnh</th>
+                            <th>Tên</th>
+                            <th>Ảnh</th>
                             <th>Giá</th>
+                            <th>Số lượng</th>
                             <th>Hành động</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         <%
                             List<Products> listP = (List<Products>) request.getAttribute("listP");
@@ -65,203 +126,154 @@
                                 for (Products o : listP) {
                         %>
                         <tr>
-                            <td>
-                                <span class="custom-checkbox">
-                                    <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                                    <label for="checkbox1"></label>
-                                </span>
-                            </td>
                             <td><%=o.getId()%></td>
                             <td><%=o.getName()%></td>
-                            <td>
-                                <img src="<%=o.getImage()%>">
-                            </td>
+                            <td><img src="<%=o.getImage()%>"></td>
                             <td><%=o.getPrice()%>₫</td>
+                            <td><%=o.getQuantity()%></td>
                             <td>
-                                <a href="edit?pid=<%=o.getId()%>"  class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                <a href="delete?pid=<%=o.getId()%>" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                <a href="edit?pid=<%=o.getId()%>" class="edit">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                                <a href="delete?pid=<%=o.getId()%>" 
+                                   class="delete ms-2"
+                                   onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">
+                                    <i class="material-icons">delete</i>
+                                </a>
                             </td>
                         </tr>
-                        <%
-                                }
-                            }
-                        %>
+                        <% }
+                            } %>
                     </tbody>
                 </table>
-                <div class="clearfix">
-                    <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a href="#">Previous</a></li>
-                        <li class="page-item"><a href="#" class="page-link">1</a></li>
-                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                        <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                        <li class="page-item"><a href="#" class="page-link">4</a></li>
-                        <li class="page-item"><a href="#" class="page-link">5</a></li>
-                        <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                    </ul>
-                </div>
-                <a href="Home"> 
-                    <button class="btn btn-secondary">
-                        ← Quay lại
-                    </button>
-                </a>
+
+                <!-- BACK -->
+                <a href="Home" class="btn btn-secondary">← Quay lại</a>
             </div>
         </div>
-        <!-- Edit Modal HTML -->
-        <div id="addEmployeeModal" class="modal fade">
+
+        <!-- ================= ADD MODAL ================= -->
+        <div class="modal fade" id="addModal">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="add" method="post">
-                        <div class="modal-header">						
-                            <h4 class="modal-title">Thêm sản phẩm</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                    <form action="add" method="post" enctype="multipart/form-data"
+                          onsubmit="return confirm('Bạn có chắc muốn thêm sản phẩm?')">
+
+                        <div class="modal-header">
+                            <h5>Thêm sản phẩm</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
-                        <div class="modal-body">					
-                            <div class="form-group">
-                                <label>Tên sản phẩm</label>
-                                <input name="name" type="text" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Hình ảnh</label>
-                                <input name="image" type="text" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Giá</label>
-                                <input name="price" type="text" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Mô tả</label>
-                                <textarea name="description" class="form-control" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Số lượng</label>
-                                <input name="quantity" type="number" class="form-control" required min="0">
-                            </div>
-                            <div class="form-group">
-                                <label>Danh mục</label>
-                                <select name="category" class="form-control" style="height: 40px;">
-                                    <%
-                                        List<Category> listC = (List<Category>) request.getAttribute("listC");
-                                        if (listC != null) {
-                                            for (Category o : listC) {
-                                    %>
-                                    <option value="<%=o.getCid()%>"><%=o.getCname()%></option>
-                                    <%
-                                            }
-                                        }
-                                    %>
-                                </select>
-                            </div>
+
+                        <div class="modal-body">
+
+                            <input name="name" class="form-control mb-2" placeholder="Tên sản phẩm" required>
+
+                            <!-- Upload file -->
+                            <input type="file" name="imageFile" class="form-control mb-2">
+
+                            <!-- Hoặc nhập link -->
+                            <input type="text" name="imageUrl" class="form-control mb-2" placeholder="Hoặc nhập link ảnh">
+
+                            <input name="price" type="text" class="form-control mb-2" placeholder="Giá" required>
+
+                            <input name="quantity" type="number" class="form-control mb-2" placeholder="Số lượng" required>
+
+                            <textarea name="description" class="form-control mb-2" placeholder="Mô tả"></textarea>
+
+                            <select name="category" class="form-select">
+                                <%
+                                    List<Category> listC = (List<Category>) request.getAttribute("listC");
+                                    if (listC != null) {
+                                        for (Category c : listC) {
+                                %>
+                                <option value="<%=c.getCid()%>"><%=c.getCname()%></option>
+                                <% }
+                                    } %>
+                            </select>
 
                         </div>
+
                         <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-success" value="Add">
+                            <button class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                            <button class="btn btn-success">Thêm</button>
                         </div>
+
                     </form>
+
                 </div>
             </div>
         </div>
-        <!-- Edit Modal HTML -->
+
+        <!-- ================= EDIT AUTO OPEN ================= -->
         <%
             Products detail = (Products) request.getAttribute("detail");
-        %>
-        <div id="editEmployeeModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form action="edit" method="post">
-                        <div class="modal-header">						
-                            <h4 class="modal-title">Sửa sản phẩm</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <input type="hidden" name="id" value="<%= (detail != null ? detail.getId() : "")%>">
-                            <div class="form-group">
-                                <label>ID</label>
-                                <input value="<%= (detail != null ? detail.getId() : "")%>" 
-                                       type="text" class="form-control" readonly>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Tên sản phẩm</label>
-                                <input name="name" value="<%= (detail != null ? detail.getName() : "")%>" type="text" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Hình ảnh</label>
-                                <input name="image" value="<%= (detail != null ? detail.getImage() : "")%>" type="text" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Giá</label>
-                                <input name="price" value="<%= (detail != null ? detail.getPrice() : "")%>" type="text" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Mô tả</label>
-                                <textarea name="description" class="form-control" required><%= (detail != null ? detail.getDescription() : "")%></textarea>
-                            </div>	
-                            <div class="form-group">
-                                <label>Số lượng</label>
-                                <input name="quantity" 
-                                       value="<%= (detail != null ? detail.getQuantity() : "")%>" 
-                                       type="number" class="form-control" required min="0">
-                            </div>
-                            <div class="form-group">
-                                <label>Danh mục</label>
-                                <select name="category" class="form-control" style="height: 40px;">
-                                    <%
-                                        if (listC != null) {
-                                            for (Category o : listC) {
-                                    %>
-                                    <option value="<%=o.getCid()%>"
-                                            <%= (detail != null && o.getCid() == detail.getCid()) ? "selected" : ""%>>
-                                        <%=o.getCname()%>
-                                    </option>
-                                    <%
-                                            }
-                                        }
-                                    %>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
-                            <input type="submit" class="btn btn-info" value="Lưu">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!-- Delete Modal HTML -->
-        <div id="deleteEmployeeModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form>
-                        <div class="modal-header">						
-                            <h4 class="modal-title">Xóa sản phẩm</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        </div>
-                        <div class="modal-body">					
-                            <p>Are you sure you want to delete these Records?</p>
-                            <p class="text-warning"><small>This action cannot be undone.</small></p>
-                        </div>
-                        <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-danger" value="Delete">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <script src="js/manager.js" type="text/javascript"></script>
-        <%
             if (detail != null) {
         %>
+
+        <div class="modal fade" id="editModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <form action="edit" method="post" 
+                          onsubmit="return confirm('Bạn có chắc muốn cập nhật sản phẩm?')">
+
+                        <div class="modal-header">
+                            <h5>Sửa sản phẩm</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="modal-body">
+
+                            <input type="hidden" name="id" value="<%=detail.getId()%>">
+
+                            <input name="name" value="<%=detail.getName()%>" class="form-control mb-2">
+
+                            <input name="image" value="<%=detail.getImage()%>" class="form-control mb-2">
+
+                            <input name="price" value="<%=detail.getPrice()%>" class="form-control mb-2">
+
+                            <input name="quantity" value="<%=detail.getQuantity()%>" class="form-control mb-2">
+
+                            <textarea name="description" class="form-control mb-2"><%=detail.getDescription()%></textarea>
+                            <div class="form-group">
+                                <label>Danh mục</label>
+                                <select name="category" class="form-select">
+                                    <%
+                                        for (Category c : listC) {
+                                    %>
+                                    <option value="<%=c.getCid()%>"
+                                            <%= (detail.getCid() == c.getCid()) ? "selected" : ""%>>
+                                        <%=c.getCname()%>
+                                    </option>
+                                    <% } %>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                            <button class="btn btn-primary">Lưu</button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
         <script>
-            $(document).ready(function () {
-                $('#editEmployeeModal').modal('show');
-            });
+            window.onload = function () {
+                var modal = new bootstrap.Modal(document.getElementById('editModal'));
+                modal.show();
+            };
         </script>
-        <%
-            }
-        %>
+
+        <% }%>
+
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
     </body>
 </html>

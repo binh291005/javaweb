@@ -9,9 +9,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.List;
-import model.Account;
 import model.Products;
 import model.ProductsDAO;
 
@@ -30,7 +28,6 @@ public class Edit extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -70,17 +67,34 @@ public class Edit extends HttpServlet {
             throws ServletException, IOException {
         ProductsDAO dao = new ProductsDAO();
 
-        int pid = Integer.parseInt(request.getParameter("id")); // ⚠️ dùng id từ form
-        String name = request.getParameter("name");
-        String image = request.getParameter("image");
-        String price = request.getParameter("price");
-        String description = request.getParameter("description");
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
-        int category = Integer.parseInt(request.getParameter("category"));
+        try {
+            String id_raw = request.getParameter("id");
+            String quantity_raw = request.getParameter("quantity");
+            String category_raw = request.getParameter("category");
+            if (id_raw == null || quantity_raw == null || category_raw == null
+                    || id_raw.isEmpty() || quantity_raw.isEmpty() || category_raw.isEmpty()) {
 
-        dao.editProduct(name, image, price, description, category, pid, quantity);
+                response.sendRedirect("managerproduct");
+                return;
+            }
+            int id = Integer.parseInt(id_raw);
+            int quantity = Integer.parseInt(quantity_raw);
+            int category = Integer.parseInt(category_raw);
 
-        response.sendRedirect("managerproduct"); // reload lại danh sách
+            String name = request.getParameter("name");
+            String image = request.getParameter("image");
+            String price = request.getParameter("price");
+            String description = request.getParameter("description");
+            
+
+            dao.editProduct(name, image, price, description, category, id, quantity);
+
+            response.sendRedirect("managerproduct?msg=edit_success");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect("managerproduct");
+        }
     }
 
     /**

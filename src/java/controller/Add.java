@@ -6,10 +6,12 @@ package controller;
 
 import java.io.IOException;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 import model.Account;
 import model.ProductsDAO;
 
@@ -17,6 +19,7 @@ import model.ProductsDAO;
  *
  * @author THANH BINH
  */
+@MultipartConfig
 public class Add extends HttpServlet {
 
     /**
@@ -30,22 +33,65 @@ public class Add extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        response.setCharacterEncoding("UTF-8");
         String name = request.getParameter("name");
-        String image = request.getParameter("image");
         String price = request.getParameter("price");
         String description = request.getParameter("description");
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
-        int category = Integer.parseInt(request.getParameter("category"));
+
+        String quantity_raw = request.getParameter("quantity");
+        String category_raw = request.getParameter("category");
+        if (quantity_raw == null || quantity_raw.isEmpty()
+                || category_raw == null || category_raw.isEmpty()) {
+
+            response.sendRedirect("managerproduct?msg=missing_data");
+            return;
+        }
+        int quantity = Integer.parseInt(quantity_raw);
+        int category = Integer.parseInt(category_raw);
+
         HttpSession session = request.getSession();
         Account a = (Account) session.getAttribute("acc");
+
+        if (a == null) {
+            response.sendRedirect("Login.jsp");
+            return;
+        }
+
         int sid = a.getId();
-        
+
+        Part filePart = request.getPart("imageFile");
+        String imageUrl = request.getParameter("imageUrl");
+
+        String image = null;
+
+        // 👉 CASE 1: Upload file
+        if (filePart != null && filePart.getSize() > 0) {
+
+            String fileName = filePart.getSubmittedFileName();
+
+            // đường dẫn lưu ảnh
+            String uploadPath = getServletContext().getRealPath("") + "img";
+
+            java.io.File uploadDir = new java.io.File(uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+
+            filePart.write(uploadPath + "/" + fileName);
+
+            image = "img/" + fileName; // lưu đường dẫn DB
+        } // 👉 CASE 2: nhập link
+        else if (imageUrl != null && !imageUrl.trim().isEmpty()) {
+            image = imageUrl;
+        } // 👉 lỗi
+        else {
+            response.sendRedirect("managerproduct?msg=no_image");
+            return;
+        }
+
         ProductsDAO dao = new ProductsDAO();
         dao.addProduct(name, image, price, description, category, sid, quantity);
-        response.sendRedirect("managerproduct");
-        
+
+        response.sendRedirect("managerproduct?msg=add_success");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -5,7 +5,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,7 +32,7 @@ public class Delete extends HttpServlet {
         int pid = Integer.parseInt(request.getParameter("pid"));
         ProductsDAO dao = new ProductsDAO();
         dao.deleteProduct(pid);
-        response.sendRedirect("managerproduct");
+        response.sendRedirect("managerproduct?msg=delete_success");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -93,6 +93,26 @@
         margin-bottom: 25px;
         box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* tạo chiều sâu */
     }
+    /* ===== BANNER ===== */
+    .banner {
+        width: 95%;
+        margin: 15px auto;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .banner img {
+        width: 100%;
+        height: 280px;           /* chỉnh chiều cao */
+        object-fit: cover;       /* không méo ảnh */
+        transition: 0.4s;
+    }
+
+    /* Hover nhẹ */
+    .banner img:hover {
+        transform: scale(1.03);
+    }
 </style>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
@@ -177,12 +197,9 @@
         </div>
     </div>
 </nav>
-<!--<section class="jumbotron text-center">
-    <div class="container">
-        <h1 class="jumbotron-heading">Siêu thị giày chất lượng cao</h1>
-        <p class="lead text-muted mb-0">Uy tín tạo nên thương hiệu với hơn 10 năm cung cấp các sản phầm giày nhập từ Trung Quốc</p>
-    </div>
-</section>-->
+<div class="banner">
+    <img src="img/banner.png" alt="Banner">
+</div>
 <%
     List<Category> listC = (List<Category>) request.getAttribute("listC");
 %>

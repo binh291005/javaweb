@@ -14,7 +14,7 @@
     }
 
     footer h5 {
-        font-size: 16px;
+        font-size: 20px;
         font-weight: 600;
         margin-bottom: 10px;
     }
@@ -26,7 +26,7 @@
     }
 
     footer p, footer li {
-        font-size: 13px;
+        font-size: 16px;
         margin-bottom: 5px;
     }
 

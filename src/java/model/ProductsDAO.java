@@ -281,8 +281,8 @@ public class ProductsDAO {
             ps.setString(3, price);
             ps.setString(4, description);
             ps.setInt(5, category);
-            ps.setInt(6, pid);
-            ps.setInt(7, quantity);
+            ps.setInt(6, quantity);
+            ps.setInt(7, pid);
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
