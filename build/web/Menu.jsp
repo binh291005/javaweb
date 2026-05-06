@@ -113,6 +113,27 @@
     .banner img:hover {
         transform: scale(1.03);
     }
+
+    .btn-menu {
+        color: #007bff !important;
+        font-weight: 600;
+        padding: 6px 14px;
+        border-radius: 25px;
+        transition: 0.3s;
+        margin-left: 5px;
+    }
+
+    /* hover */
+    .btn-menu:hover {
+        background: #007bff;
+        color: #fff !important;
+    }
+
+    /* active (nút đang chọn) */
+    .btn-menu.active {
+        background: linear-gradient(45deg, #007bff, #00c6ff);
+        color: #fff !important;
+    }
 </style>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
@@ -127,46 +148,30 @@
         %>
         <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
             <ul class="navbar-nav m-auto">
-                <%
-                    if (acc != null && acc.isIdadmin() == true) {
-                %> 
+
+                <% if (acc != null && acc.isIdadmin()) { %>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Quản lý tài khoản</a>
+                    <a class="nav-link btn-menu" href="#">Quản lý tài khoản</a>
                 </li>
-                <%
-                    }
-                %>
-                <%
-                    if (acc != null && acc.isIdsell() == true) {
-                %> 
+                <% } %>
+
+                <% if (acc != null && acc.isIdsell()) { %>
                 <li class="nav-item">
-                    <a class="nav-link" href="managerproduct">Quản lý sản phẩm</a>
+                    <a class="nav-link btn-menu" href="managerproduct">Quản lý sản phẩm</a>
                 </li>
-                <%
-                    }
-                %>
-                <%
-                    if (acc != null) {
-                %>
+                <% } %>
+
                 <li class="nav-item">
-                    <a class="nav-link" href="logout">Đăng xuất</a>
+                    <a class="nav-link btn-menu" href="Contact.jsp">Liên hệ</a>
                 </li>
-                <%
-                } else {
-                %>
-                <li class="nav-item">
-                    <a class="nav-link" href="Login.jsp">Đăng nhập</a>
-                </li>
-                <%
-                    }
-                %>
+
             </ul>
 
             <div class="d-flex align-items-center">
 
-                <form action="search" method="post" class="form-inline mr-3">
+                <form action="search" method="post" class="form-inline mr-4">
                     <div class="input-group input-group-sm">
-                        <input name="txt" type="text" value="${txtS}" 
+                        <input oninput="searchProduct(this)" name="txt" type="text" value="${txtS}" 
                                class="form-control" placeholder="Search...">
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-light">
@@ -180,81 +185,84 @@
                     🛒 Giỏ hàng <span class="badge badge-light">3</span>
                 </a>
 
+                <% if (acc == null) { %>
+                <!-- LOGIN -->
+                <a href="Login.jsp" class="nav-link btn-menu">Đăng nhập</a>
+
+                <!-- REGISTER -->
+                <a href="Signup.jsp" class="nav-link btn-menu">Đăng ký</a>
+
+                <% } else {%>
+
+                <!-- USER -->
+                <div class="user-box">
+                    👤 <%= acc.getUseraccount()%>
+                </div>
+
+                <!-- LOGOUT -->
+                <a href="logout" class="nav-link btn-menu">Đăng xuất</a>
+
+                <% } %>
+            </div>
+            </nav>
+            <div class="banner">
+                <img src="img/banner.png" alt="Banner">
             </div>
             <%
-                if (acc != null) {
-            %>
-            <%
-                if (acc != null) {
-            %>
-            <a class="nav-link text-white ml-3"><%= acc.getUseraccount()%></a>
-            <%
-                }
-            %>
-            <%
-                }
-            %>
-        </div>
-    </div>
-</nav>
-<div class="banner">
-    <img src="img/banner.png" alt="Banner">
-</div>
-<%
-    List<Category> listC = (List<Category>) request.getAttribute("listC");
-%>
-
-<nav class="navbar navbar-expand-md top-menu">
-    <div class="container">
-
-        <ul class="navbar-nav mx-auto">
-
-            <!-- Tất cả -->
-            <li class="nav-item">
-                <a class="nav-link 
-                   <%= (request.getAttribute("type") == null && request.getAttribute("cid") == null ? "active" : "")%>" 
-                   href="Home">
-                    TẤT CẢ
-                </a>
-            </li>
-
-            <!-- Category -->
-            <%
-                String type = (String) request.getAttribute("type");
-                Integer currentCid = (Integer) request.getAttribute("cid");
-
-                if (listC != null) {
-                    for (Category c : listC) {
-            %>
-            <li class="nav-item">
-                <a class="nav-link 
-                   <%= (type == null && currentCid != null && currentCid == c.getCid()) ? "active" : ""%>" 
-                   href="category?cid=<%=c.getCid()%>">
-                    <%=c.getCname()%>
-                </a>
-            </li>
-            <%
-                    }
-                }
+                List<Category> listC = (List<Category>) request.getAttribute("listC");
             %>
 
-            <!-- New -->
-            <li class="nav-item">
-                <a class="nav-link <%= "new".equals(request.getAttribute("type")) ? "active" : ""%>" href="new">
-                    MỚI NHẤT
-                </a>
-            </li>
+            <nav class="navbar navbar-expand-md top-menu">
+                <div class="container">
 
-            <!-- Best -->
-            <li class="nav-item">
-                <a class="nav-link <%= "best".equals(request.getAttribute("type")) ? "active" : ""%>" href="best">
-                    BÁN CHẠY
-                </a>
-            </li>
+                    <ul class="navbar-nav mx-auto">
 
-        </ul>
+                        <!-- Tất cả -->
+                        <li class="nav-item">
+                            <a class="nav-link 
+                               <%= (request.getAttribute("type") == null && request.getAttribute("cid") == null ? "active" : "")%>" 
+                               href="Home">
+                                TẤT CẢ
+                            </a>
+                        </li>
 
-    </div>
-</nav>
+                        <!-- Category -->
+                        <%
+                            String type = (String) request.getAttribute("type");
+                            Integer currentCid = (Integer) request.getAttribute("cid");
 
-<!--end of menu-->
+                            if (listC != null) {
+                                for (Category c : listC) {
+                        %>
+                        <li class="nav-item">
+                            <a class="nav-link 
+                               <%= (type == null && currentCid != null && currentCid == c.getCid()) ? "active" : ""%>" 
+                               href="category?cid=<%=c.getCid()%>">
+                                <%=c.getCname()%>
+                            </a>
+                        </li>
+                        <%
+                                }
+                            }
+                        %>
+
+                        <!-- New -->
+                        <li class="nav-item">
+                            <a class="nav-link <%= "new".equals(request.getAttribute("type")) ? "active" : ""%>" href="new">
+                                MỚI NHẤT
+                            </a>
+                        </li>
+
+                        <!-- Best -->
+                        <li class="nav-item">
+                            <a class="nav-link <%= "best".equals(request.getAttribute("type")) ? "active" : ""%>" href="best">
+                                BÁN CHẠY
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+            </nav>
+
+            <!--end of menu-->

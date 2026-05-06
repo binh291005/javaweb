@@ -32,7 +32,7 @@
                 <jsp:include page="Left.jsp"></jsp:include>
 
                     <div class="col-sm-9">
-                        <div class="row">
+                        <div class="row" id="content">
                         <%
                             List<Products> listP = (List<Products>) request.getAttribute("listP");
                             if (listP != null && !listP.isEmpty()) {
@@ -67,5 +67,28 @@
             </div>
         </div>
         <jsp:include page="Footer.jsp"></jsp:include>
+        <script>
+            let delayTimer;
+
+            function searchProduct(param) {
+                clearTimeout(delayTimer);
+
+                delayTimer = setTimeout(function () {
+                    var txtSearch = param.value;
+
+                    $.ajax({
+                        url: "searchProduct",
+                        type: "get",
+                        data: {
+                            txt: txtSearch
+                        },
+                        success: function (data) {
+                            document.getElementById("content").innerHTML = data;
+                        }
+                    });
+
+                }, 300);
+            }
+        </script>
     </body>
 </html>

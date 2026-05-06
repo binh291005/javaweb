@@ -337,6 +337,24 @@ public class ProductsDAO {
         }
         return list;
     }
+    
+    public void insertContact(String name, String email, String message) {
+        String sql = "INSERT INTO contact(name, email, message) VALUES(?,?,?)";
+
+        try {
+            Connection conn = new dbConnect().getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setString(1, name);
+            ps.setString(2, email);
+            ps.setString(3, message);
+
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
         ProductsDAO dao = new ProductsDAO();

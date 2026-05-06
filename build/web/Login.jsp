@@ -58,13 +58,14 @@
                     <label class="form-check-label">Nhớ mật khẩu</label>
                 </div>
 
-                <button class="btn btn-success btn-block">Đăng nhập</button>
+                <button class="btn btn-success w-100">Đăng nhập</button>
 
                 <button type="button" onclick="showSignup()" class="btn btn-primary btn-block mt-2">
                     Đăng ký tài khoản mới
                 </button>
                 <a href="Home" class="back-link">← Quay lại</a>
             </form>
+
 
         </div>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

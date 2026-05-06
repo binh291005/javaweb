@@ -9,15 +9,14 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import model.Account;
+import model.EmailUtil;
 import model.ProductsDAO;
 
 /**
  *
  * @author THANH BINH
  */
-public class Login extends HttpServlet {
+public class Contact extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,22 +30,35 @@ public class Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
-        String username = request.getParameter("user");
-        String password = request.getParameter("pass");
-        ProductsDAO dao = new ProductsDAO();
-        Account a = dao.login(username, password);
-        if(a == null){
-            request.setAttribute("mess", "Sai tài khoản hoặc mật khẩu");
-            request.setAttribute("user", username);
-            request.getRequestDispatcher("Login.jsp").forward(request, response);
-            
-        }else{
-            HttpSession session = request.getSession();
-            session.setAttribute("acc", a);
-            session.setMaxInactiveInterval(30000);
-            response.sendRedirect("Home");
+        request.setCharacterEncoding("UTF-8");
+
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String message = request.getParameter("message");
+
+        // validate
+        if (name == null || name.isEmpty()
+                || email == null || email.isEmpty()
+                || message == null || message.isEmpty()) {
+
+            response.sendRedirect("Contact.jsp?msg=missing");
+            return;
         }
+
+        // lưu DB
+        ProductsDAO dao = new ProductsDAO();
+        dao.insertContact(name, email, message);
+
+        // gửi mail
+        String content = "📩 Liên hệ mới:\n\n"
+                + "Tên: " + name + "\n"
+                + "Email: " + email + "\n"
+                + "Nội dung:\n" + message;
+
+        EmailUtil.sendEmail("binh279205@gmail.com", "Liên hệ mới từ website", content);
+
+        response.sendRedirect("Contact.jsp?msg=success");
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
