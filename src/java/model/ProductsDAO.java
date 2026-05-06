@@ -162,11 +162,11 @@ public class ProductsDAO {
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
-                        rs.getInt(5),
+                        rs.getString(5),
                         rs.getString(6),
                         rs.getString(7),
-                        rs.getBoolean(8),
-                        rs.getBoolean(9));
+                        rs.getInt(8),
+                        rs.getInt(9));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -188,11 +188,11 @@ public class ProductsDAO {
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
-                        rs.getInt(5),
+                        rs.getString(5),
                         rs.getString(6),
                         rs.getString(7),
-                        rs.getBoolean(8),
-                        rs.getBoolean(9));
+                        rs.getInt(8),
+                        rs.getInt(9));
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -13,16 +13,16 @@ public class Account {
     private String useraccount;
     private String username;
     private String email;
-    private int numberphone;
+    private String numberphone;
     private String address;
     private String password;
-    private boolean idsell;
-    private boolean idadmin;
+    private int idsell;
+    private int idadmin;
 
     public Account() {
     }
 
-    public Account(int id, String useraccount, String username, String email, int numberphone, String address, String password, boolean idsell, boolean idadmin) {
+    public Account(int id, String useraccount, String username, String email, String numberphone, String address, String password, int idsell, int idadmin) {
         this.id = id;
         this.useraccount = useraccount;
         this.username = username;
@@ -66,11 +66,11 @@ public class Account {
         this.email = email;
     }
 
-    public int getNumberphone() {
+    public String getNumberphone() {
         return numberphone;
     }
 
-    public void setNumberphone(int numberphone) {
+    public void setNumberphone(String numberphone) {
         this.numberphone = numberphone;
     }
 
@@ -90,19 +90,19 @@ public class Account {
         this.password = password;
     }
 
-    public boolean isIdsell() {
+    public int getIdsell() {
         return idsell;
     }
 
-    public void setIdsell(boolean idsell) {
+    public void setIdsell(int idsell) {
         this.idsell = idsell;
     }
 
-    public boolean isIdadmin() {
+    public int getIdadmin() {
         return idadmin;
     }
 
-    public void setIdadmin(boolean idadmin) {
+    public void setIdadmin(int idadmin) {
         this.idadmin = idadmin;
     }
 

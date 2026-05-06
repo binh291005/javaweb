@@ -60,6 +60,10 @@
         <servlet-name>Contact</servlet-name>
         <servlet-class>controller.Contact</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AccountManager</servlet-name>
+        <servlet-class>controller.AccountManager</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
         <url-pattern>/Home</url-pattern>
@@ -119,5 +123,9 @@
     <servlet-mapping>
         <servlet-name>Contact</servlet-name>
         <url-pattern>/contact</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountManager</servlet-name>
+        <url-pattern>/accountManager</url-pattern>
     </servlet-mapping>
 </web-app>

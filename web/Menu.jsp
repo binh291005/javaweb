@@ -149,13 +149,13 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
             <ul class="navbar-nav m-auto">
 
-                <% if (acc != null && acc.isIdadmin()) { %>
+                <% if (acc != null && acc.getIdadmin() == 1) { %>
                 <li class="nav-item">
-                    <a class="nav-link btn-menu" href="#">Quản lý tài khoản</a>
+                    <a class="nav-link btn-menu" href="accountManager">Quản lý tài khoản</a>
                 </li>
                 <% } %>
 
-                <% if (acc != null && acc.isIdsell()) { %>
+                <% if (acc != null && acc.getIdsell() == 1) { %>
                 <li class="nav-item">
                     <a class="nav-link btn-menu" href="managerproduct">Quản lý sản phẩm</a>
                 </li>
